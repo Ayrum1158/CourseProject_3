@@ -1,0 +1,12 @@
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\bin\Debug\CourseProject_Layered.exe.config
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\bin\Debug\CourseProject_Layered.exe
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\bin\Debug\CourseProject_Layered.pdb
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.csprojAssemblyReference.cache
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.ComputerPartsForm.resources
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.Properties.Resources.resources
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.csproj.GenerateResource.cache
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.csproj.CoreCompileInputs.cache
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.exe
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.pdb
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\bin\Debug\DB\CPDatabase.mdf
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\bin\Debug\DB\CPDatabase_log.ldf

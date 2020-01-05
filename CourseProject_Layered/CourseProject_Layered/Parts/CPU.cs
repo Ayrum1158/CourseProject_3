@@ -27,7 +27,7 @@ namespace CourseProject_Layered
 
         public object[] ReadFromDB(DB_interface DBI_obj)
         {
-            return DBI_obj.SelectAllFrom("CPUs");
+            return DBI_obj.SelectRowWhere("CPU_id", "ID", ID.ToString());
         }
     }
 }

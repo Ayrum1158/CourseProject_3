@@ -2,21 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using DBI;
 
 namespace CourseProject_Layered.Parts
 {
-    class Peripheral
+    class Peripheral: IDB_Write, IDB_Read
     {
+        public int ID { get; private set; }
         public PeripheralType PT { get; private set; }
         public string Name { get; private set; }
         public string Performance { get; private set; }
 
-        public Peripheral(PeripheralType pt, string name, string performance)
+        public Peripheral(int id, PeripheralType pt, string name, string performance)
         {
+            ID = id;
             PT = pt;
             Name = name;
             Performance = performance;
+        }
+
+        public void WriteToDB(DB_interface DBI_obj)
+        {
+            DBI_obj.InsertInto("Peripheral", new string[] { "Peripheral_id", "Type", "Name", "Performance" }, new object[] { ID, PT, Name, Performance });
+        }
+
+        public object[] ReadFromDB(DB_interface DBI_obj)
+        {
+            return DBI_obj.SelectRowWhere("Peripheral", "Peripheral_id", ID.ToString());
         }
     }
 }

@@ -22,14 +22,35 @@ namespace DBI//DataBaseInterface
             {
                 case DB_ConstructorMode.InFolder:
                     DB_path = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
-                    break;
-                case DB_ConstructorMode.OFD:
+                    SB.AppendFormat(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = {0}; Integrated Security = True", DB_path + "CPDatabase.mdf");
+                    ConnectionString = SB.ToString();
+                    SqlConnection conn = new SqlConnection(ConnectionString);
+                    try
+                    {                        
+                        conn.Open();
+                        conn.Close();
+                    }
+                    catch(SqlException)
+                    {
+                        MessageBox.Show("No \"CPDatabase.mdf\" found in default directory.\nPlease, choose file manually.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        goto case DB_ConstructorMode.OFD;
+                    }
+                    finally
+                    {
+                        conn.Dispose();
+                    }
+                    return;
+                    //break;
+               case DB_ConstructorMode.OFD:
                     OpenFileDialog OFD = new OpenFileDialog();
                     OFD.Filter = "MS SQL Database|*.mdf";
-                    if(OFD.ShowDialog() == DialogResult.OK)
+                    var OFD_res = OFD.ShowDialog();
+                    if (OFD_res == DialogResult.OK)
                     {
                         DB_path = OFD.FileName;
                     }
+                    else
+                        throw new InvalidDataException();//bad path
                     break;
             }
             SB.AppendFormat(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = {0}; Integrated Security = True", DB_path + "CPDatabase.mdf");
@@ -57,7 +78,43 @@ namespace DBI//DataBaseInterface
                         {
                             for (int i = 0; i < DR.FieldCount; i++)
                             {
-                                Values.Add(DR.GetValue(i));                               
+                                Values.Add(DR.GetValue(i));
+                            }
+                        }
+                }
+                conn.Close();
+            }
+            return Values.ToArray();
+        }
+
+        /// <summary>
+        /// Method to select rows using "WHERE" keyword.
+        /// </summary>
+        /// <param name="Table">Table to select from.</param>
+        /// <param name="WhereParam">Column to compare.</param>
+        /// <param name="ParamValue">Value to compare.</param>
+        /// <returns></returns>
+        public object[] SelectRowWhere(string Table, string WhereParam, string ParamValue)
+        {
+            List<object> Values = new List<object>();
+
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                SqlCommand cmdSelectRowWhere = new SqlCommand();
+                cmdSelectRowWhere.Connection = conn;
+                StringBuilder SB = new StringBuilder();
+                SB.AppendFormat("SELECT * FROM {0} WHERE {1} = {2}", Table, WhereParam, ParamValue);
+                cmdSelectRowWhere.CommandText = SB.ToString();
+
+                conn.Open();
+                using (SqlDataReader DR = cmdSelectRowWhere.ExecuteReader())
+                {
+                    if (DR.HasRows)
+                        while (DR.Read())
+                        {
+                            for (int i = 0; i < DR.FieldCount; i++)
+                            {
+                                Values.Add(DR.GetValue(i));
                             }
                         }
                 }

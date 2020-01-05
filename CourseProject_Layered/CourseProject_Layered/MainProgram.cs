@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using DBI;
+using System.IO;
 
 namespace CourseProject_Layered
 {
@@ -32,13 +33,16 @@ namespace CourseProject_Layered
         {
             //################################## tests start
 
+            //File.Copy(@"D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\DB\CPDatabase.mdf", "MyDatabase.mdf");
+
             DBI.DB_interface dbi = new DBI.DB_interface(DB_ConstructorMode.InFolder);
 
-            RAM ram = new RAM(1, (float)3.5, 2200, RAM_Type.DDR3, 2);
+            RAM ram1 = new RAM(1, 300, 2200, RAM_Type.DDR3, 2);
+            RAM ram2 = new RAM(2, 450, 2400, RAM_Type.DDR4, 4);
+            ram1.WriteToDB(dbi);
+            ram2.WriteToDB(dbi);
 
-            ram.WriteToDB(dbi);
-
-            var a = ram.ReadFromDB(dbi);
+            var a = ram1.ReadFromDB(dbi);
 
             dbi.ClearTable("RAMs");
 

@@ -3,20 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBI;
 
 namespace CourseProject_Layered
 {
-    class Motherboard
+    class Motherboard : IDB_Write, IDB_Read
     {
+        public int ID { get; private set; }
         public Manufacturer MF { get; private set; }
         public SocketType ST { get; private set; }
         public uint RAM_Slots { get; private set; }
 
-        public Motherboard(Manufacturer mf, SocketType st, uint ram_slots)
+        public Motherboard(int id, Manufacturer mf, SocketType st, uint ram_slots)
         {
+            ID = Math.Abs(id);
             MF = mf;
             ST = st;
             RAM_Slots = ram_slots;
+        }
+
+        public void WriteToDB(DB_interface DBI_obj)
+        {
+            DBI_obj.InsertInto("Motherboards", new string[] { "Motherboard_id", "Manufacturer", "Socket", "RAM_Slots" }, new object[] { ID, MF, ST, RAM_Slots });
+        }
+
+        public object[] ReadFromDB(DB_interface DBI_obj)
+        {
+            return DBI_obj.SelectAllFrom("Motherboards");
         }
     }
 }

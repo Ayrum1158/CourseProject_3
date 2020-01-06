@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DBI;
 
-namespace CourseProject_Layered.Parts
+namespace CourseProject_Layered
 {
     class Peripheral: IDB_Write, IDB_Read
     {

@@ -14,6 +14,10 @@ namespace DBI//DataBaseInterface
     {
         private string ConnectionString;
 
+        /// <summary>
+        /// DBI constructor.
+        /// </summary>
+        /// <param name="DBCM">"InFolder" tries to pick file named "CPDatabase.mdf" in local folder. "OFD" opens a file dialog to choose database file malually.</param>
         public DB_interface(DB_ConstructorMode DBCM)
         {
             StringBuilder SB = new StringBuilder();
@@ -22,6 +26,7 @@ namespace DBI//DataBaseInterface
             {
                 case DB_ConstructorMode.InFolder:
                     DB_path = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
+                    DB_path += @"DB\";
                     SB.AppendFormat(@"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = {0}; Integrated Security = True", DB_path + "CPDatabase.mdf");
                     ConnectionString = SB.ToString();
                     SqlConnection conn = new SqlConnection(ConnectionString);
@@ -91,7 +96,7 @@ namespace DBI//DataBaseInterface
         /// Method to select rows using "WHERE" keyword.
         /// </summary>
         /// <param name="Table">Table to select from.</param>
-        /// <param name="WhereParam">Column to compare.</param>
+        /// <param name="WhereParam">Column name to compare with parameter.</param>
         /// <param name="ParamValue">Value to compare.</param>
         /// <returns></returns>
         public object[] SelectRowWhere(string Table, string WhereParam, string ParamValue)
@@ -127,45 +132,101 @@ namespace DBI//DataBaseInterface
         /// Method to insert 1 row of data in table of database.
         /// </summary>
         /// <param name="Table">Table to insert data in.</param>
-        /// <param name="ParamNames">Names of columns.</param>
-        /// <param name="ParamValues">Values corresponding to the parameters.</param>
-        public void InsertInto(string Table, string[] ParamNames, object[] ParamValues)
+        /// <param name="ColumnNames">Names of columns.</param>
+        /// <param name="ColumnValues">Values corresponding to the parameters.</param>
+        public bool InsertInto(string Table, string[] ColumnNames, object[] ColumnValues)//whole new row
         {
+            bool res = true;
             SqlConnection conn = new SqlConnection(ConnectionString);
-            int N = ParamNames.Length;
+            int N = ColumnNames.Length;
             SqlCommand cmdInsertIn = new SqlCommand();
             cmdInsertIn.Connection = conn;
             StringBuilder CommandSB = new StringBuilder();//for cmdInsertIn
-            CommandSB.Append("INSERT INTO ");
-            CommandSB.AppendFormat("{0} VALUES(", Table);
+            CommandSB.AppendFormat("INSERT INTO {0} VALUES(", Table);
+
             for (int i = 0; i < N; i++)
             {
-                CommandSB.AppendFormat("@{0},",ParamNames[i]);
-                cmdInsertIn.Parameters.AddWithValue(ParamNames[i], ParamValues[i]);
+                CommandSB.AppendFormat("@{0},",ColumnNames[i]);
+                cmdInsertIn.Parameters.AddWithValue(ColumnNames[i], ColumnValues[i]);
             }
 
             cmdInsertIn.CommandText = CommandSB.ToString().TrimEnd(',')+')';
+
             using (conn)
             {
                 conn.Open();
-                try {
-                cmdInsertIn.ExecuteNonQuery();
+                try
+                {
+                    cmdInsertIn.ExecuteNonQuery();
                 }
                 catch(SqlException exc)
                 {
-                    if(exc.Number == 2627)//2627 - primary key violation code
-                    MessageBox.Show("Cannot execute writing!\nPrimary key violation!", "Data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (exc.Number == 2627)//2627 - primary key violation code
+                    {
+                        MessageBox.Show("Cannot execute writing!\nPrimary key violation!", "Data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        res = false;
+                    }
+                    else
+                        throw new Exception("Something wrong with DB input");
                 }
                 conn.Close();
             }
+            return res;
         }
+
+        /// <summary>
+        /// Method to update values in existing row of database.
+        /// </summary>
+        /// <param name="Table">Table to insert data in.</param>
+        /// <param name="ColumnNames">Names of columns.</param>
+        /// <param name="ColumnNewValues">Values corresponding to the parameters.</param>
+        /// <param name="WhereParam">Column name to compare with parameter.</param>
+        /// <param name="ParamValue">Compare parameter.</param>
+        public void UpdateWhere(string Table, string[] ColumnNames, object[] ColumnNewValues, string WhereParam, string ParamValue)//N columns in 1 row per call
+        {
+            /*
+                UPDATE table_name
+                SET column1 = value1, column2 = value2, ...
+                WHERE condition;
+            */
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            int N = ColumnNames.Length;
+            SqlCommand cmdUpdateWhere = new SqlCommand();
+            cmdUpdateWhere.Connection = conn;
+            StringBuilder CommandSB = new StringBuilder();//for cmdUpdateWhere
+            string CommandTempString;
+
+            CommandSB.AppendFormat("UPDATE {0} SET ", Table);
+
+            for(int i = 0; i < N; i++)
+                CommandSB.AppendFormat("{0} = {1},",ColumnNames[i], ColumnNewValues[i]);
+
+            CommandTempString = CommandSB.ToString();
+            CommandTempString = CommandTempString.TrimEnd(',');
+            CommandSB.Clear().Append(CommandTempString);
+           
+            CommandSB.AppendFormat(" WHERE {0} = {1};", WhereParam, ParamValue);
+
+            cmdUpdateWhere.CommandText = CommandSB.ToString();
+
+            for(int i = 0; i < N; i++)
+                cmdUpdateWhere.Parameters.AddWithValue(ColumnNames[i], ColumnNewValues[i]);
+
+            using(conn)
+            {
+                conn.Open();
+                var debugV = cmdUpdateWhere.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
 
         /// <summary>
         /// Method to delete rows in database table.
         /// SqlCommand: "DELETE FROM {Table} WHERE {WhereParam} = {ParamValue}".
         /// </summary>
         /// <param name="Table">Table in database to delete from.</param>
-        /// <param name="WhereParam">Column parameter.</param>
+        /// <param name="WhereParam">Column name to compare with parameter.</param>
         /// <param name="ParamValue">Compare parameter.</param>
         /// <returns></returns>
         public int DeleteRows(string Table, string WhereParam, string ParamValue)

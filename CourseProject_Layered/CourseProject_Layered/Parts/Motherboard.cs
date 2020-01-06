@@ -12,9 +12,9 @@ namespace CourseProject_Layered
         public int ID { get; private set; }
         public Manufacturer MF { get; private set; }
         public SocketType ST { get; private set; }
-        public uint RAM_Slots { get; private set; }
+        public int RAM_Slots { get; private set; }
 
-        public Motherboard(int id, Manufacturer mf, SocketType st, uint ram_slots)
+        public Motherboard(int id, Manufacturer mf, SocketType st, int ram_slots)
         {
             ID = Math.Abs(id);
             MF = mf;

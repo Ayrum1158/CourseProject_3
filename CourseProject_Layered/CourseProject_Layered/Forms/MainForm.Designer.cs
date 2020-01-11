@@ -31,12 +31,6 @@
             this.MainDGV = new System.Windows.Forms.DataGridView();
             this.TopLable = new System.Windows.Forms.Label();
             this.CloseLable = new System.Windows.Forms.Label();
-            this.InventoryNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Motherboard_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RAM_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Peripherals_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CPU_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Changelog_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LoadDBButton = new System.Windows.Forms.Button();
             this.CreateComputerButton = new System.Windows.Forms.Button();
             this.RemoveComputerButton = new System.Windows.Forms.Button();
@@ -47,20 +41,19 @@
             this.ShowChangelogButton = new System.Windows.Forms.Button();
             this.PeripheralsListBox = new System.Windows.Forms.ListBox();
             this.ChangelogListBox = new System.Windows.Forms.ListBox();
+            this.SaveToDBButton = new System.Windows.Forms.Button();
+            this.FillTestValuesButtons = new System.Windows.Forms.Button();
+            this.dgvdatasourceclearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainDGV)).BeginInit();
             this.SuspendLayout();
             // 
             // MainDGV
             // 
+            this.MainDGV.AllowUserToAddRows = false;
+            this.MainDGV.AllowUserToDeleteRows = false;
             this.MainDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.MainDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MainDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.InventoryNumber,
-            this.Motherboard_id,
-            this.RAM_id,
-            this.Peripherals_id,
-            this.CPU_id,
-            this.Changelog_id});
+            this.MainDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.MainDGV.Location = new System.Drawing.Point(3, 42);
             this.MainDGV.MultiSelect = false;
             this.MainDGV.Name = "MainDGV";
@@ -91,74 +84,52 @@
             this.CloseLable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.CloseLable.Click += new System.EventHandler(this.CloseLabel_Click);
             // 
-            // InventoryNumber
-            // 
-            this.InventoryNumber.HeaderText = "Inventory Number";
-            this.InventoryNumber.Name = "InventoryNumber";
-            // 
-            // Motherboard_id
-            // 
-            this.Motherboard_id.HeaderText = "Motherboard id";
-            this.Motherboard_id.Name = "Motherboard_id";
-            // 
-            // RAM_id
-            // 
-            this.RAM_id.HeaderText = "RAM id";
-            this.RAM_id.Name = "RAM_id";
-            // 
-            // Peripherals_id
-            // 
-            this.Peripherals_id.HeaderText = "Peripherals id";
-            this.Peripherals_id.Name = "Peripherals_id";
-            // 
-            // CPU_id
-            // 
-            this.CPU_id.HeaderText = "CPU id";
-            this.CPU_id.Name = "CPU_id";
-            // 
-            // Changelog_id
-            // 
-            this.Changelog_id.HeaderText = "Changelog id";
-            this.Changelog_id.Name = "Changelog_id";
-            // 
             // LoadDBButton
             // 
-            this.LoadDBButton.Location = new System.Drawing.Point(3, 355);
+            this.LoadDBButton.Location = new System.Drawing.Point(3, 351);
             this.LoadDBButton.Name = "LoadDBButton";
             this.LoadDBButton.Size = new System.Drawing.Size(107, 41);
             this.LoadDBButton.TabIndex = 3;
             this.LoadDBButton.Text = "Load DB";
             this.LoadDBButton.UseVisualStyleBackColor = true;
+            this.LoadDBButton.Click += new System.EventHandler(this.LoadDBButton_Click);
             // 
             // CreateComputerButton
             // 
+            this.CreateComputerButton.Enabled = false;
             this.CreateComputerButton.Location = new System.Drawing.Point(492, 43);
             this.CreateComputerButton.Name = "CreateComputerButton";
             this.CreateComputerButton.Size = new System.Drawing.Size(98, 48);
             this.CreateComputerButton.TabIndex = 4;
             this.CreateComputerButton.Text = "Create computer";
             this.CreateComputerButton.UseVisualStyleBackColor = true;
+            this.CreateComputerButton.Click += new System.EventHandler(this.CreateComputerButton_Click);
             // 
             // RemoveComputerButton
             // 
+            this.RemoveComputerButton.Enabled = false;
             this.RemoveComputerButton.Location = new System.Drawing.Point(492, 86);
             this.RemoveComputerButton.Name = "RemoveComputerButton";
             this.RemoveComputerButton.Size = new System.Drawing.Size(98, 48);
             this.RemoveComputerButton.TabIndex = 5;
             this.RemoveComputerButton.Text = "Remove computer";
             this.RemoveComputerButton.UseVisualStyleBackColor = true;
+            this.RemoveComputerButton.Click += new System.EventHandler(this.RemoveComputerButton_Click);
             // 
             // EditMotherboardButton
             // 
+            this.EditMotherboardButton.Enabled = false;
             this.EditMotherboardButton.Location = new System.Drawing.Point(492, 129);
             this.EditMotherboardButton.Name = "EditMotherboardButton";
             this.EditMotherboardButton.Size = new System.Drawing.Size(98, 48);
             this.EditMotherboardButton.TabIndex = 6;
             this.EditMotherboardButton.Text = "Edit Motherboard";
             this.EditMotherboardButton.UseVisualStyleBackColor = true;
+            this.EditMotherboardButton.Click += new System.EventHandler(this.EditMotherboardButton_Click);
             // 
             // EditRAMButton
             // 
+            this.EditRAMButton.Enabled = false;
             this.EditRAMButton.Location = new System.Drawing.Point(492, 172);
             this.EditRAMButton.Name = "EditRAMButton";
             this.EditRAMButton.Size = new System.Drawing.Size(98, 48);
@@ -168,6 +139,7 @@
             // 
             // EditCPUButton
             // 
+            this.EditCPUButton.Enabled = false;
             this.EditCPUButton.Location = new System.Drawing.Point(492, 215);
             this.EditCPUButton.Name = "EditCPUButton";
             this.EditCPUButton.Size = new System.Drawing.Size(98, 48);
@@ -177,6 +149,7 @@
             // 
             // EditPeripheralsButton
             // 
+            this.EditPeripheralsButton.Enabled = false;
             this.EditPeripheralsButton.Location = new System.Drawing.Point(492, 258);
             this.EditPeripheralsButton.Name = "EditPeripheralsButton";
             this.EditPeripheralsButton.Size = new System.Drawing.Size(98, 48);
@@ -186,12 +159,14 @@
             // 
             // ShowChangelogButton
             // 
+            this.ShowChangelogButton.Enabled = false;
             this.ShowChangelogButton.Location = new System.Drawing.Point(492, 301);
             this.ShowChangelogButton.Name = "ShowChangelogButton";
             this.ShowChangelogButton.Size = new System.Drawing.Size(98, 48);
             this.ShowChangelogButton.TabIndex = 10;
             this.ShowChangelogButton.Text = "Show changelog for selected";
             this.ShowChangelogButton.UseVisualStyleBackColor = true;
+            this.ShowChangelogButton.Click += new System.EventHandler(this.ShowChangelogButton_Click);
             // 
             // PeripheralsListBox
             // 
@@ -209,12 +184,46 @@
             this.ChangelogListBox.Size = new System.Drawing.Size(288, 147);
             this.ChangelogListBox.TabIndex = 12;
             // 
+            // SaveToDBButton
+            // 
+            this.SaveToDBButton.Enabled = false;
+            this.SaveToDBButton.Location = new System.Drawing.Point(116, 351);
+            this.SaveToDBButton.Name = "SaveToDBButton";
+            this.SaveToDBButton.Size = new System.Drawing.Size(107, 41);
+            this.SaveToDBButton.TabIndex = 13;
+            this.SaveToDBButton.Text = "Save to DB";
+            this.SaveToDBButton.UseVisualStyleBackColor = true;
+            this.SaveToDBButton.Click += new System.EventHandler(this.SaveToDBButton_Click);
+            // 
+            // FillTestValuesButtons
+            // 
+            this.FillTestValuesButtons.Location = new System.Drawing.Point(246, 355);
+            this.FillTestValuesButtons.Name = "FillTestValuesButtons";
+            this.FillTestValuesButtons.Size = new System.Drawing.Size(101, 38);
+            this.FillTestValuesButtons.TabIndex = 16;
+            this.FillTestValuesButtons.Text = "Fill test values";
+            this.FillTestValuesButtons.UseVisualStyleBackColor = true;
+            this.FillTestValuesButtons.Click += new System.EventHandler(this.FillTestValuesButtons_Click);
+            // 
+            // dgvdatasourceclearButton
+            // 
+            this.dgvdatasourceclearButton.Location = new System.Drawing.Point(366, 355);
+            this.dgvdatasourceclearButton.Name = "dgvdatasourceclearButton";
+            this.dgvdatasourceclearButton.Size = new System.Drawing.Size(101, 38);
+            this.dgvdatasourceclearButton.TabIndex = 17;
+            this.dgvdatasourceclearButton.Text = "clear dgv datasource";
+            this.dgvdatasourceclearButton.UseVisualStyleBackColor = true;
+            this.dgvdatasourceclearButton.Click += new System.EventHandler(this.DgvdatasourceclearButton_Click);
+            // 
             // ComputerPartsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(889, 400);
+            this.ClientSize = new System.Drawing.Size(889, 394);
+            this.Controls.Add(this.dgvdatasourceclearButton);
+            this.Controls.Add(this.FillTestValuesButtons);
+            this.Controls.Add(this.SaveToDBButton);
             this.Controls.Add(this.ChangelogListBox);
             this.Controls.Add(this.PeripheralsListBox);
             this.Controls.Add(this.ShowChangelogButton);
@@ -246,12 +255,6 @@
         private System.Windows.Forms.DataGridView MainDGV;
         private System.Windows.Forms.Label TopLable;
         private System.Windows.Forms.Label CloseLable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn InventoryNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Motherboard_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RAM_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Peripherals_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CPU_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Changelog_id;
         private System.Windows.Forms.Button LoadDBButton;
         private System.Windows.Forms.Button CreateComputerButton;
         private System.Windows.Forms.Button RemoveComputerButton;
@@ -262,6 +265,9 @@
         private System.Windows.Forms.Button ShowChangelogButton;
         private System.Windows.Forms.ListBox PeripheralsListBox;
         private System.Windows.Forms.ListBox ChangelogListBox;
+        private System.Windows.Forms.Button SaveToDBButton;
+        private System.Windows.Forms.Button FillTestValuesButtons;
+        private System.Windows.Forms.Button dgvdatasourceclearButton;
     }
 }
 

@@ -10,15 +10,14 @@ namespace CourseProject_Layered
 {
     class Computer : IDB_Write, IDB_Read
     {
-        private List<Changelog> ChangelogList;
-        private List<Peripheral> PeripheralsList;
-        private long PeripheralsChangelogs_id;
-
         private string _inventoryNumber;
         private CPU _curCPU;
         private Motherboard _curMotherboard;
         private RAM _curRAM;
 
+        public List<Changelog> ChangelogList { get; private set; }
+        public List<Peripheral> PeripheralsList { get; private set; }
+        public long PeripheralsChangelogs_id { get; private set; }
         public string InventoryNumber
         {
             get { return _inventoryNumber; }
@@ -31,6 +30,7 @@ namespace CourseProject_Layered
                 }
                 else
                     throw new FormatException("Alphanumeric characters only.");
+                PeripheralsChangelogs_id = Base36ToBase10(_inventoryNumber);//generating changelogs id using InventoryNumber
                 ChangelogList.Add(new Changelog(PeripheralsChangelogs_id, "New computer created, inventory number: " + value));
             }
         }
@@ -112,10 +112,10 @@ namespace CourseProject_Layered
             ChangelogList = new List<Changelog>();
             PeripheralsList = new List<Peripheral>();
             InventoryNumber = inventoryNumber;
-            PeripheralsChangelogs_id = Base36ToBase10(InventoryNumber);//generating changelogs id using InventoryNumber
+            
         }
 
-        public void WriteToDB(DB_interface DBI_obj)//first write or update records
+        public bool WriteToDB(DB_interface DBI_obj)//first write or update records
         {
             if(CurCPU != null)
                 CurCPU.WriteToDB(DBI_obj);
@@ -134,21 +134,19 @@ namespace CourseProject_Layered
                 foreach (var i in ChangelogList)
                 { i.WriteToDB(DBI_obj); }
 
-            //bool InsertResult = true;
+            bool result;
 
             try
             {
-                DBI_obj.InsertInto("ComputerParts", new string[] { "InventoryNumber", "Motherboard_id", "RAM_id", "Peripherals_id", "CPU_id", "PeripheralsChangelogs_id" },
+                result = DBI_obj.InsertInto("ComputerParts", new string[] { "InventoryNumber", "Motherboard_id", "RAM_id", "Peripherals_id", "CPU_id", "PeripheralsChangelogs_id" },
                                                     new object[] { InventoryNumber, CurMotherboard.ID, CurRAM.ID, PeripheralsChangelogs_id, CurCPU.ID, PeripheralsChangelogs_id });
             }
             catch (NullReferenceException)//if not all components are in computer
             {
-                /*InsertResult = */DBI_obj.InsertInto("ComputerParts (InventoryNumber)", new string[] { "InventoryNumber" }, new object[] { InventoryNumber });
+                result = DBI_obj.InsertInto("ComputerParts (InventoryNumber)", new string[] { "InventoryNumber" }, new object[] { InventoryNumber });
             }
             finally
             {
-                //if(!InsertResult)
-                //    $$
                 if (CurMotherboard != null)
                     DBI_obj.UpdateWhere("ComputerParts", new string[] { "Motherboard_id" }, new object[] { CurMotherboard.ID }, "InventoryNumber", InventoryNumber);
                 if (CurRAM != null)
@@ -161,6 +159,7 @@ namespace CourseProject_Layered
                 
                 DBI_obj.UpdateWhere("ComputerParts", new string[] { "Changelog_id" }, new object[] { PeripheralsChangelogs_id }, "InventoryNumber", InventoryNumber);
             }
+            return result;
         }
 
         public object[] ReadFromDB(DB_interface DBI_obj)

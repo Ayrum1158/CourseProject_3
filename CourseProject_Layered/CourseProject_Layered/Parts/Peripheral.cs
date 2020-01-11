@@ -21,9 +21,9 @@ namespace CourseProject_Layered
             Performance = performance;
         }
 
-        public void WriteToDB(DB_interface DBI_obj)
+        public bool WriteToDB(DB_interface DBI_obj)
         {
-            DBI_obj.InsertInto("Peripheral", new string[] { "Peripheral_id", "Type", "Name", "Performance" }, new object[] { ID, PT, Name, Performance });
+            return DBI_obj.InsertInto("Peripheral", new string[] { "Peripheral_id", "Type", "Name", "Performance" }, new object[] { ID, PT, Name, Performance });
         }
 
         public object[] ReadFromDB(DB_interface DBI_obj)

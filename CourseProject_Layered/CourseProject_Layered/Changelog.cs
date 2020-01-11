@@ -17,9 +17,9 @@ namespace CourseProject_Layered
             Logged_change = change;
         }
 
-        public void WriteToDB(DB_interface DBI_obj)
+        public bool WriteToDB(DB_interface DBI_obj)
         {
-            DBI_obj.InsertInto("Changelogs", new string[] { "Changelogs_id", "Logged_change" }, new object[] { ID, Logged_change });
+            return DBI_obj.InsertInto("Changelogs", new string[] { "Changelogs_id", "Logged_change" }, new object[] { ID, Logged_change });
         }
 
         public object[] ReadFromDB(DB_interface DBI_obj)

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.IO;
@@ -10,7 +8,7 @@ using CourseProject_Layered;
 
 namespace DBI//DataBaseInterface
 {
-    class DB_interface
+    public class DB_interface
     {
         private string ConnectionString;
 
@@ -108,7 +106,7 @@ namespace DBI//DataBaseInterface
                 SqlCommand cmdSelectRowWhere = new SqlCommand();
                 cmdSelectRowWhere.Connection = conn;
                 StringBuilder SB = new StringBuilder();
-                SB.AppendFormat("SELECT * FROM {0} WHERE {1} = {2}", Table, WhereParam, ParamValue);
+                SB.AppendFormat("SELECT * FROM {0} WHERE {1} = '{2}'", Table, WhereParam, ParamValue);
                 cmdSelectRowWhere.CommandText = SB.ToString();
 
                 conn.Open();
@@ -134,14 +132,14 @@ namespace DBI//DataBaseInterface
         /// <param name="Table">Table to insert data in.</param>
         /// <param name="ColumnNames">Names of columns.</param>
         /// <param name="ColumnValues">Values corresponding to the parameters.</param>
-        public bool InsertInto(string Table, string[] ColumnNames, object[] ColumnValues)//whole new row
+        public bool InsertInto(string Table, string[] ColumnNames, object[] ColumnValues, bool IgnorePKErrorMessage = false)// whole new row
         {
             bool res = true;
             SqlConnection conn = new SqlConnection(ConnectionString);
             int N = ColumnNames.Length;
             SqlCommand cmdInsertIn = new SqlCommand();
             cmdInsertIn.Connection = conn;
-            StringBuilder CommandSB = new StringBuilder();//for cmdInsertIn
+            StringBuilder CommandSB = new StringBuilder();// for cmdInsertIn
             CommandSB.AppendFormat("INSERT INTO {0} VALUES(", Table);
 
             for (int i = 0; i < N; i++)
@@ -161,13 +159,14 @@ namespace DBI//DataBaseInterface
                 }
                 catch(SqlException exc)
                 {
-                    if (exc.Number == 2627)//2627 - primary key violation code
+                    if (exc.Number == 2627)// 2627 - primary key violation code
                     {
-                        MessageBox.Show("Cannot execute writing!\nPrimary key violation!", "Data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if(!IgnorePKErrorMessage)
+                            MessageBox.Show("Cannot execute writing!\nPrimary key violation!", "Data error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         res = false;
                     }
                     else
-                        throw new Exception("Something wrong with DB input");
+                        throw exc;// Something wrong with DB input
                 }
                 conn.Close();
             }
@@ -182,7 +181,7 @@ namespace DBI//DataBaseInterface
         /// <param name="ColumnNewValues">Values corresponding to the parameters.</param>
         /// <param name="WhereParam">Column name to compare with parameter.</param>
         /// <param name="ParamValue">Compare parameter.</param>
-        public void UpdateWhere(string Table, string[] ColumnNames, object[] ColumnNewValues, string WhereParam, string ParamValue)//N columns in 1 row per call
+        public void UpdateWhere(string Table, string[] ColumnNames, object[] ColumnNewValues, string WhereParam, string ParamValue)// N columns in 1 row per call
         {
             /*
                 UPDATE table_name
@@ -198,14 +197,20 @@ namespace DBI//DataBaseInterface
 
             CommandSB.AppendFormat("UPDATE {0} SET ", Table);
 
-            for(int i = 0; i < N; i++)
-                CommandSB.AppendFormat("{0} = {1},",ColumnNames[i], ColumnNewValues[i]);
+            for (int i = 0; i < N; i++)
+            {
+                if(ColumnNewValues[i] is string)
+                    CommandSB.AppendFormat("{0} = '{1}',", ColumnNames[i], ColumnNewValues[i]);
+                else
+                    CommandSB.AppendFormat("{0} = {1},", ColumnNames[i], ColumnNewValues[i]);
+
+            }
 
             CommandTempString = CommandSB.ToString();
             CommandTempString = CommandTempString.TrimEnd(',');
             CommandSB.Clear().Append(CommandTempString);
            
-            CommandSB.AppendFormat(" WHERE {0} = {1};", WhereParam, ParamValue);
+            CommandSB.AppendFormat(" WHERE {0} = '{1}';", WhereParam, ParamValue);
 
             cmdUpdateWhere.CommandText = CommandSB.ToString();
 
@@ -219,7 +224,6 @@ namespace DBI//DataBaseInterface
                 conn.Close();
             }
         }
-
 
         /// <summary>
         /// Method to delete rows in database table.
@@ -238,7 +242,7 @@ namespace DBI//DataBaseInterface
                 cmdDeleteRow.Connection = conn;
                 StringBuilder CommandSB = new StringBuilder();
                 CommandSB.AppendFormat("DELETE FROM {0} ", Table);
-                CommandSB.AppendFormat("WHERE {0} = {1}", WhereParam, ParamValue);
+                CommandSB.AppendFormat("WHERE {0} = '{1}'", WhereParam, ParamValue);
                 cmdDeleteRow.CommandText = CommandSB.ToString();
                 conn.Open();
                 RowsDeleted = cmdDeleteRow.ExecuteNonQuery();

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DBI;
 
 namespace CourseProject_Layered
@@ -20,9 +16,9 @@ namespace CourseProject_Layered
             ST = st;
         }
 
-        public void WriteToDB(DB_interface DBI_obj)
+        public bool WriteToDB(DB_interface DBI_obj)
         {
-            DBI_obj.InsertInto("CPUs", new string[] { "CPU_id", "Socket", "Frequency" }, new object[] { ID, ST, Frequency });
+            return DBI_obj.InsertInto("CPUs", new string[] { "CPU_id", "Socket", "Frequency" }, new object[] { ID, ST, Frequency });
         }
 
         public object[] ReadFromDB(DB_interface DBI_obj)

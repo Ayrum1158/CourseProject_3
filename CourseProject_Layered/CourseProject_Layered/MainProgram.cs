@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-//using System.Threading;
+﻿using System.Windows.Forms;
 using DBI;
-using System.IO;
 
 namespace CourseProject_Layered
 {
-    interface IDB_Write
+    public interface IDB_Write
     {
-        void WriteToDB(DB_interface DBI_obj);
+        bool WriteToDB(DB_interface DBI_obj);
     }
 
-    interface IDB_Read
+    public interface IDB_Read
     {
         object[] ReadFromDB(DB_interface DBI_obj);
     }
 
-    enum SocketType { AM2, AM3, AM4, LGA_1151, LGA_1150, LGA_1155, LGA_2011, LGA_775, LGA_1156, LGA_1366 };
-    enum Manufacturer { Asus, MSI, Gigabyte, EVGA, Biostar, ASRock };
-    enum RAM_Type { DDR2, DDR3, DDR4 };
-    enum PeripheralType { Mouse, Keyboard, Printer, Webcam, Microphone, Headphones }
-    enum DB_ConstructorMode { InFolder, OFD }
+    public enum SocketType { AM2, AM3, AM4, LGA_1151, LGA_1150, LGA_1155, LGA_2011, LGA_775, LGA_1156, LGA_1366 };
+    public enum Manufacturer { Asus, MSI, Gigabyte, EVGA, Biostar, ASRock };
+    public enum RAM_Type { DDR2, DDR3, DDR4 };
+    public enum PeripheralType { Mouse, Keyboard, Printer, Webcam, Microphone, Headphones }
+    public enum DB_ConstructorMode { InFolder, OFD }
+
+
 
     static class MainProgram
     {

@@ -22,9 +22,9 @@ namespace CourseProject_Layered
             RAM_Slots = ram_slots;
         }
 
-        public void WriteToDB(DB_interface DBI_obj)
+        public bool WriteToDB(DB_interface DBI_obj)
         {
-            DBI_obj.InsertInto("Motherboards", new string[] { "Motherboard_id", "Manufacturer", "Socket", "RAM_Slots" }, new object[] { ID, MF, ST, RAM_Slots });
+            return DBI_obj.InsertInto("Motherboards", new string[] { "Motherboard_id", "Manufacturer", "Socket", "RAM_Slots" }, new object[] { ID, MF, ST, RAM_Slots });
         }
 
         public object[] ReadFromDB(DB_interface DBI_obj)

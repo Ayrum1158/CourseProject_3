@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DBI;
 
 namespace CourseProject_Layered
@@ -24,9 +20,9 @@ namespace CourseProject_Layered
             StickCount = Math.Abs(stickCount);
         }
 
-        public void WriteToDB(DB_interface DBI_obj)
+        public bool WriteToDB(DB_interface DBI_obj)
         {
-            DBI_obj.InsertInto("RAMs", new string[] { "RAM_id", "Volume", "Type", "StickCount", "Frequency" }, new object[] { ID, Volume, RT.ToString(), StickCount, Frequency });
+            return DBI_obj.InsertInto("RAMs", new string[] { "RAM_id", "Volume", "Type", "StickCount", "Frequency" }, new object[] { ID, Volume, RT.ToString(), StickCount, Frequency });
         }
 
         public object[] ReadFromDB(DB_interface DBI_obj)

@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace CourseProject_Layered
 {
-    class Computer : IDB_Write, IDB_Read
+    public class Computer : IDB_Write, IDB_Read
     {
         private string _inventoryNumber;
         private CPU _curCPU;
@@ -112,7 +112,6 @@ namespace CourseProject_Layered
             ChangelogList = new List<Changelog>();
             PeripheralsList = new List<Peripheral>();
             InventoryNumber = inventoryNumber;
-            
         }
 
         public bool WriteToDB(DB_interface DBI_obj)//first write or update records
@@ -162,9 +161,59 @@ namespace CourseProject_Layered
             return result;
         }
 
-        public object[] ReadFromDB(DB_interface DBI_obj)
+        public object[] ReadFromDB(DB_interface DBI_obj)//read all ID's
         {
-            return DBI_obj.SelectRowWhere("ComputerParts", "InventoryNumber", InventoryNumber);
+            return DBI_obj.SelectRowsWhere("ComputerParts", "InventoryNumber", InventoryNumber);
+        }
+
+        public Computer ReadFromDBFull(DB_interface DBI_obj)//read whole Computer structure
+        {
+            var IDs = DBI_obj.SelectRowsWhere("ComputerParts", "InventoryNumber", InventoryNumber);//6 elements
+
+            var ReadMotherboard = DBI_obj.SelectRowsWhere("Motherboards", "Motherboard_id", IDs[1].ToString());
+            var ReadRAM = DBI_obj.SelectRowsWhere("RAMs", "RAM_id", IDs[2].ToString());
+            var ReadPeripherals = DBI_obj.SelectRowsWhere("Peripheral", "Peripheral_id", IDs[3].ToString());
+            var ReadCPU = DBI_obj.SelectRowsWhere("CPUs", "CPU_id", IDs[4].ToString());
+            var ReadChangelog = DBI_obj.SelectRowsWhere("Changelogs", "Changelog_id", IDs[5].ToString());
+
+            if(ReadMotherboard.Length > 0)
+            {
+                Motherboard RMB = new Motherboard((int)ReadMotherboard[0], (Manufacturer)Enum.Parse(typeof(Manufacturer),
+                    ReadMotherboard[1].ToString()), (SocketType)Enum.Parse(typeof(SocketType), ReadMotherboard[2].ToString()), (int)ReadMotherboard[3]);
+                CurMotherboard = RMB;
+            }
+            if (ReadRAM.Length > 0)
+            {
+                RAM RR = new RAM((int)ReadRAM[0], (int)ReadRAM[1], (int)ReadRAM[2], (RAM_Type)Enum.Parse(typeof(RAM_Type), ReadRAM[3].ToString()), (int)ReadRAM[4]);
+                CurRAM = RR;
+            }
+            if(ReadCPU.Length > 0)
+            {
+                CPU RC = new CPU((int)ReadCPU[0], (SocketType)Enum.Parse(typeof(SocketType), ReadCPU[1].ToString()), (int)ReadCPU[2]);
+                CurCPU = RC;
+            }
+            if(ReadChangelog.Length > 0)
+            {
+                List<Changelog> RCL = new List<Changelog>();
+                for(int i = 0; i < ReadChangelog.Length; i+=2)
+                {                
+                    Changelog change = new Changelog(long.Parse(ReadChangelog[i].ToString()), ReadChangelog[i + 1].ToString());
+                    RCL.Add(change);
+                }
+                List<Changelog> ChangelogList = RCL;
+            }
+            if(ReadPeripherals.Length > 0)
+            {
+                List<Peripheral> RPL = new List<Peripheral>();
+                for (int i = 0; i < ReadPeripherals.Length; i += 4)
+                {
+                    Peripheral peripheral = new Peripheral((int)ReadPeripherals[i], (PeripheralType)Enum.Parse(typeof(PeripheralType),
+                        ReadPeripherals[i + 1].ToString()), ReadPeripherals[i + 2].ToString(), ReadPeripherals[i + 3].ToString());
+                    RPL.Add(peripheral);
+                }
+                PeripheralsList = RPL;
+            }
+            return this;
         }
 
         private long Base36ToBase10(string input)

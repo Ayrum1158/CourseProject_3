@@ -3,7 +3,7 @@ using DBI;
 
 namespace CourseProject_Layered
 {
-    class RAM : IDB_Write, IDB_Read
+    public class RAM : IDB_Write, IDB_Read
     {
         public int ID { get; private set; }//always pisitive
         public int Volume { get; private set; }//in Mb
@@ -27,7 +27,7 @@ namespace CourseProject_Layered
 
         public object[] ReadFromDB(DB_interface DBI_obj)
         {
-            return DBI_obj.SelectRowWhere("RAMs", "RAM_id", ID.ToString());
+            return DBI_obj.SelectRowsWhere("RAMs", "RAM_id", ID.ToString());
         }
     }
 }

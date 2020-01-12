@@ -37,8 +37,8 @@
             this.EditMotherboardButton = new System.Windows.Forms.Button();
             this.EditRAMButton = new System.Windows.Forms.Button();
             this.EditCPUButton = new System.Windows.Forms.Button();
-            this.EditPeripheralsButton = new System.Windows.Forms.Button();
-            this.ShowChangelogButton = new System.Windows.Forms.Button();
+            this.AddPeripheralsButton = new System.Windows.Forms.Button();
+            this.ShowChangelogAndPeripheralsButton = new System.Windows.Forms.Button();
             this.PeripheralsListBox = new System.Windows.Forms.ListBox();
             this.ChangelogListBox = new System.Windows.Forms.ListBox();
             this.SaveToDBButton = new System.Windows.Forms.Button();
@@ -51,6 +51,7 @@
             // 
             this.MainDGV.AllowUserToAddRows = false;
             this.MainDGV.AllowUserToDeleteRows = false;
+            this.MainDGV.AllowUserToResizeColumns = false;
             this.MainDGV.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.MainDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MainDGV.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
@@ -75,10 +76,11 @@
             // CloseLable
             // 
             this.CloseLable.BackColor = System.Drawing.Color.OrangeRed;
-            this.CloseLable.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CloseLable.Font = new System.Drawing.Font("Copperplate Gothic Light", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CloseLable.Location = new System.Drawing.Point(846, -1);
             this.CloseLable.Name = "CloseLable";
-            this.CloseLable.Size = new System.Drawing.Size(43, 40);
+            this.CloseLable.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.CloseLable.Size = new System.Drawing.Size(49, 40);
             this.CloseLable.TabIndex = 2;
             this.CloseLable.Text = "X";
             this.CloseLable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -136,6 +138,7 @@
             this.EditRAMButton.TabIndex = 7;
             this.EditRAMButton.Text = "Edit RAM";
             this.EditRAMButton.UseVisualStyleBackColor = true;
+            this.EditRAMButton.Click += new System.EventHandler(this.EditRAMButton_Click);
             // 
             // EditCPUButton
             // 
@@ -146,32 +149,34 @@
             this.EditCPUButton.TabIndex = 8;
             this.EditCPUButton.Text = "Edit CPU";
             this.EditCPUButton.UseVisualStyleBackColor = true;
+            this.EditCPUButton.Click += new System.EventHandler(this.EditCPUButton_Click);
             // 
-            // EditPeripheralsButton
+            // AddPeripheralsButton
             // 
-            this.EditPeripheralsButton.Enabled = false;
-            this.EditPeripheralsButton.Location = new System.Drawing.Point(492, 258);
-            this.EditPeripheralsButton.Name = "EditPeripheralsButton";
-            this.EditPeripheralsButton.Size = new System.Drawing.Size(98, 48);
-            this.EditPeripheralsButton.TabIndex = 9;
-            this.EditPeripheralsButton.Text = "Edit peripherals";
-            this.EditPeripheralsButton.UseVisualStyleBackColor = true;
+            this.AddPeripheralsButton.Enabled = false;
+            this.AddPeripheralsButton.Location = new System.Drawing.Point(492, 258);
+            this.AddPeripheralsButton.Name = "AddPeripheralsButton";
+            this.AddPeripheralsButton.Size = new System.Drawing.Size(98, 48);
+            this.AddPeripheralsButton.TabIndex = 9;
+            this.AddPeripheralsButton.Text = "Add peripherals";
+            this.AddPeripheralsButton.UseVisualStyleBackColor = true;
+            this.AddPeripheralsButton.Click += new System.EventHandler(this.AddPeripheralsButton_Click);
             // 
-            // ShowChangelogButton
+            // ShowChangelogAndPeripheralsButton
             // 
-            this.ShowChangelogButton.Enabled = false;
-            this.ShowChangelogButton.Location = new System.Drawing.Point(492, 301);
-            this.ShowChangelogButton.Name = "ShowChangelogButton";
-            this.ShowChangelogButton.Size = new System.Drawing.Size(98, 48);
-            this.ShowChangelogButton.TabIndex = 10;
-            this.ShowChangelogButton.Text = "Show changelog for selected";
-            this.ShowChangelogButton.UseVisualStyleBackColor = true;
-            this.ShowChangelogButton.Click += new System.EventHandler(this.ShowChangelogButton_Click);
+            this.ShowChangelogAndPeripheralsButton.Enabled = false;
+            this.ShowChangelogAndPeripheralsButton.Location = new System.Drawing.Point(492, 301);
+            this.ShowChangelogAndPeripheralsButton.Name = "ShowChangelogAndPeripheralsButton";
+            this.ShowChangelogAndPeripheralsButton.Size = new System.Drawing.Size(98, 48);
+            this.ShowChangelogAndPeripheralsButton.TabIndex = 10;
+            this.ShowChangelogAndPeripheralsButton.Text = "Show changelog and peripherals";
+            this.ShowChangelogAndPeripheralsButton.UseVisualStyleBackColor = true;
+            this.ShowChangelogAndPeripheralsButton.Click += new System.EventHandler(this.ShowChangelogAndPeripheralsButton_Click);
             // 
             // PeripheralsListBox
             // 
             this.PeripheralsListBox.FormattingEnabled = true;
-            this.PeripheralsListBox.Location = new System.Drawing.Point(596, 43);
+            this.PeripheralsListBox.Location = new System.Drawing.Point(596, 195);
             this.PeripheralsListBox.Name = "PeripheralsListBox";
             this.PeripheralsListBox.Size = new System.Drawing.Size(288, 147);
             this.PeripheralsListBox.TabIndex = 11;
@@ -179,7 +184,7 @@
             // ChangelogListBox
             // 
             this.ChangelogListBox.FormattingEnabled = true;
-            this.ChangelogListBox.Location = new System.Drawing.Point(596, 202);
+            this.ChangelogListBox.Location = new System.Drawing.Point(596, 42);
             this.ChangelogListBox.Name = "ChangelogListBox";
             this.ChangelogListBox.Size = new System.Drawing.Size(288, 147);
             this.ChangelogListBox.TabIndex = 12;
@@ -226,8 +231,8 @@
             this.Controls.Add(this.SaveToDBButton);
             this.Controls.Add(this.ChangelogListBox);
             this.Controls.Add(this.PeripheralsListBox);
-            this.Controls.Add(this.ShowChangelogButton);
-            this.Controls.Add(this.EditPeripheralsButton);
+            this.Controls.Add(this.ShowChangelogAndPeripheralsButton);
+            this.Controls.Add(this.AddPeripheralsButton);
             this.Controls.Add(this.EditCPUButton);
             this.Controls.Add(this.EditRAMButton);
             this.Controls.Add(this.EditMotherboardButton);
@@ -244,7 +249,6 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Computer Parts Course Project";
-            this.Load += new System.EventHandler(this.ComputerPartsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.MainDGV)).EndInit();
             this.ResumeLayout(false);
 
@@ -261,8 +265,8 @@
         private System.Windows.Forms.Button EditMotherboardButton;
         private System.Windows.Forms.Button EditRAMButton;
         private System.Windows.Forms.Button EditCPUButton;
-        private System.Windows.Forms.Button EditPeripheralsButton;
-        private System.Windows.Forms.Button ShowChangelogButton;
+        private System.Windows.Forms.Button AddPeripheralsButton;
+        private System.Windows.Forms.Button ShowChangelogAndPeripheralsButton;
         private System.Windows.Forms.ListBox PeripheralsListBox;
         private System.Windows.Forms.ListBox ChangelogListBox;
         private System.Windows.Forms.Button SaveToDBButton;

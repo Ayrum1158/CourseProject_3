@@ -3,7 +3,7 @@ using DBI;
 
 namespace CourseProject_Layered
 {
-    class CPU : IDB_Write, IDB_Read
+    public class CPU : IDB_Write, IDB_Read
     {
         public int ID { get; private set; }
         public SocketType ST { get; private set; }
@@ -23,7 +23,7 @@ namespace CourseProject_Layered
 
         public object[] ReadFromDB(DB_interface DBI_obj)
         {
-            return DBI_obj.SelectRowWhere("CPU_id", "ID", ID.ToString());
+            return DBI_obj.SelectRowsWhere("CPU_id", "ID", ID.ToString());
         }
     }
 }

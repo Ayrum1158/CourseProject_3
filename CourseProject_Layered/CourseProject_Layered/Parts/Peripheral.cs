@@ -6,7 +6,7 @@ using DBI;
 
 namespace CourseProject_Layered
 {
-    class Peripheral: IDB_Write, IDB_Read
+    public class Peripheral: IDB_Write, IDB_Read
     {
         public int ID { get; private set; }
         public PeripheralType PT { get; private set; }
@@ -28,7 +28,7 @@ namespace CourseProject_Layered
 
         public object[] ReadFromDB(DB_interface DBI_obj)
         {
-            return DBI_obj.SelectRowWhere("Peripheral", "Peripheral_id", ID.ToString());
+            return DBI_obj.SelectRowsWhere("Peripheral", "Peripheral_id", ID.ToString());
         }
     }
 }

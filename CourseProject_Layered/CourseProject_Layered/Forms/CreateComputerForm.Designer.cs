@@ -82,6 +82,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CreateComputerForm";

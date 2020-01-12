@@ -6,7 +6,7 @@ using DBI;
 
 namespace CourseProject_Layered
 {
-    class Changelog : IDB_Write, IDB_Read
+    public class Changelog : IDB_Write, IDB_Read
     {
         public long ID { get; private set; }
         public string Logged_change { get; private set; }
@@ -19,12 +19,12 @@ namespace CourseProject_Layered
 
         public bool WriteToDB(DB_interface DBI_obj)
         {
-            return DBI_obj.InsertInto("Changelogs", new string[] { "Changelogs_id", "Logged_change" }, new object[] { ID, Logged_change });
+            return DBI_obj.InsertInto("Changelogs", new string[] { "Changelog_id", "Logged_change" }, new object[] { ID, Logged_change });
         }
 
         public object[] ReadFromDB(DB_interface DBI_obj)
         {
-            return DBI_obj.SelectRowWhere("Changelogs", "Changelogs_id", ID.ToString());
+            return DBI_obj.SelectRowsWhere("Changelogs", "Changelog_id", ID.ToString());
         }
     }
 }

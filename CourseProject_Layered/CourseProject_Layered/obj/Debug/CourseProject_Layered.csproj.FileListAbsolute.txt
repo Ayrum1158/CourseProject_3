@@ -12,3 +12,6 @@ D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\bin\Debug\DB\CPDatabase_log.ldf
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.CreateComputerForm.resources
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.MotherboardEditForm.resources
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.RAMEditForm.resources
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.CPUEditForm.resources
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.PeripheralsEditForm.resources

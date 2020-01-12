@@ -8,13 +8,13 @@ namespace CourseProject_Layered
     public partial class MotherboardEditForm : Form
     {
         private DB_interface DB_Interface;
-        private DataGridView MainDGV;
+
+        public Motherboard motherboard;
 
         public MotherboardEditForm(DB_interface dbi, DataGridView dgv)
         {
             InitializeComponent();
             DB_Interface = dbi;
-            MainDGV = dgv;
         }
 
         private void MotherboardEditForm_Load(object sender, EventArgs e)
@@ -25,17 +25,19 @@ namespace CourseProject_Layered
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            Motherboard motherboard = new Motherboard((int)IDNumericUpDown.Value, (Manufacturer)ManufacturerComboBox.SelectedItem,
+            motherboard = new Motherboard((int)IDNumericUpDown.Value, (Manufacturer)ManufacturerComboBox.SelectedItem,
                                                         (SocketType)SocketComboBox.SelectedItem, (int)SlotsNumericUpDown.Value);
-            if(motherboard.WriteToDB(DB_Interface))
+            if (motherboard.WriteToDB(DB_Interface))
             {
-                MainDGV.CurrentRow.Cells[1].Value = motherboard.ID;
+                this.DialogResult = DialogResult.OK;
             }
+            this.Close();
         }
     }
 }

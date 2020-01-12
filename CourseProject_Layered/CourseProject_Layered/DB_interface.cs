@@ -97,7 +97,7 @@ namespace DBI//DataBaseInterface
         /// <param name="WhereParam">Column name to compare with parameter.</param>
         /// <param name="ParamValue">Value to compare.</param>
         /// <returns></returns>
-        public object[] SelectRowWhere(string Table, string WhereParam, string ParamValue)
+        public object[] SelectRowsWhere(string Table, string WhereParam, string ParamValue)
         {
             List<object> Values = new List<object>();
 

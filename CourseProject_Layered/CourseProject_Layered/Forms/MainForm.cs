@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using DBI;
-using System.Data.SqlClient;
+//using System.Data.SqlClient;
 
 namespace CourseProject_Layered
 {
@@ -21,18 +21,14 @@ namespace CourseProject_Layered
 
         private const int ElementsInCP = 6;
         private DB_interface DB_Interface;
-
         private int ComputersCount;
+        private List<Computer> Computers;
 
         public ComputerPartsForm()
         {
             InitializeComponent();
             DB_Interface = new DB_interface(DB_ConstructorMode.InFolder);
-        }
-
-        private void ComputerPartsForm_Load(object sender, EventArgs e)
-        {
-        
+            Computers = new List<Computer>();
         }
 
         private void CloseLabel_Click(object sender, EventArgs e)
@@ -82,12 +78,30 @@ namespace CourseProject_Layered
 
             MainDGV.DataSource = MainDT;
 
+            foreach (DataGridViewColumn dgvc in MainDGV.Columns)
+            {
+                dgvc.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            var DT = (DataTable)MainDGV.DataSource;
+
+            Computers.Clear();
+
+            for (int i = 0; i < ComputersCount; i++)
+            {
+                Computer NewComp = new Computer(DT.Rows[i].ItemArray[0].ToString());
+                NewComp.ReadFromDBFull(DB_Interface);
+                Computers.Add(NewComp);
+            }
+
             SaveToDBButton.Enabled = true;
             CreateComputerButton.Enabled = true;
             RemoveComputerButton.Enabled = true;
             EditMotherboardButton.Enabled = true;
-
-            ShowChangelogButton.Enabled = true;
+            EditRAMButton.Enabled = true;
+            EditCPUButton.Enabled = true;
+            AddPeripheralsButton.Enabled = true;
+            ShowChangelogAndPeripheralsButton.Enabled = true;
         }
 
         private void SaveToDBButton_Click(object sender, EventArgs e)
@@ -104,7 +118,7 @@ namespace CourseProject_Layered
                 {
                     string InventoryNumber = (string)MainDT.Rows[i].ItemArray[0];
 
-                    var temp = DB_Interface.InsertInto("ComputerParts (InventoryNumber)", new string[] { "InventoryNumber" }, new object[] { InventoryNumber }, true);
+                    DB_Interface.InsertInto("ComputerParts (InventoryNumber)", new string[] { "InventoryNumber" }, new object[] { InventoryNumber }, true);
                     for(int j = 0; j < ElementsInCP-1; j++)
                     {
                         if (MainDT.Rows[i].ItemArray[j + 1] != DBNull.Value)
@@ -131,39 +145,114 @@ namespace CourseProject_Layered
 
         private void CreateComputerButton_Click(object sender, EventArgs e)
         {
-            CreateComputerForm ccf = new CreateComputerForm(DB_Interface, MainDGV);
+            CreateComputerForm ccf = new CreateComputerForm(DB_Interface);
             ccf.ShowDialog(this);
-            if (ccf.ComputerAdded)
+            if (ccf.DialogResult == DialogResult.OK)
+            {
+                for (int i = 0; i < MainDGV.Rows.Count; i++)// is this check needed when we have dialogresult?
+                {
+                    if ((string)MainDGV.Rows[i].Cells[0].Value == ccf.NewComp.InventoryNumber)
+                    {
+                        MessageBox.Show("Same ID found. Please enter unique ID.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                DataTable DT = (DataTable)MainDGV.DataSource;
+                DataRow row = DT.NewRow();
+                row["InventoryNumber"] = ccf.NewComp.InventoryNumber;
+                row["Peripherals_id"] = ccf.NewComp.PeripheralsChangelogs_id;
+                row["Changelog_id"] = ccf.NewComp.PeripheralsChangelogs_id;
+                DT.Rows.Add(row);
+
+                Computers.Add(ccf.NewComp);
                 ComputersCount++;
+            }
         }
 
         private void RemoveComputerButton_Click(object sender, EventArgs e)
         {
             if (MainDGV.Rows.Count > 0)
             {
+                Computers.RemoveAt(MainDGV.CurrentRow.Index);
                 DB_Interface.DeleteRows("ComputerParts", "InventoryNumber", MainDGV.CurrentRow.Cells[0].Value.ToString());
                 MainDGV.Rows.Remove(MainDGV.CurrentRow);
                 ComputersCount--;
             }
         }
 
-        private void ShowChangelogButton_Click(object sender, EventArgs e)
+        private void EditMotherboardButton_Click(object sender, EventArgs e)
         {
-            PeripheralsListBox.Items.Clear();
             if (MainDGV.Rows.Count > 0)
             {
-                object[] Changelog = DB_Interface.SelectRowWhere("Changelogs", "Changelogs_id", MainDGV.CurrentRow.Cells[5].Value.ToString());
-                for(int i = 1; i < Changelog.Length; i+=2)
+                MotherboardEditForm mef = new MotherboardEditForm(DB_Interface, MainDGV);
+                mef.ShowDialog(this);
+                if (mef.DialogResult == DialogResult.OK)
                 {
-                    PeripheralsListBox.Items.Add(Changelog[i]);
+                    Computers[MainDGV.CurrentRow.Index].CurMotherboard = mef.motherboard;
+                    if (Computers[MainDGV.CurrentRow.Index].CurMotherboard == mef.motherboard)
+                        MainDGV.CurrentRow.Cells[1].Value = mef.motherboard.ID;
+                    else
+                        MessageBox.Show("Cannot set this motherboard in this computer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private void EditMotherboardButton_Click(object sender, EventArgs e)
+        private void EditRAMButton_Click(object sender, EventArgs e)
         {
-            MotherboardEditForm mef = new MotherboardEditForm(DB_Interface, MainDGV);
-            mef.ShowDialog(this);
+            if (MainDGV.Rows.Count > 0)
+            {
+                RAMEditForm ramef = new RAMEditForm(DB_Interface);
+                ramef.ShowDialog(this);
+                if(ramef.DialogResult == DialogResult.OK)
+                {
+                    Computers[MainDGV.CurrentRow.Index].CurRAM = ramef.ram;
+                    if (Computers[MainDGV.CurrentRow.Index].CurRAM == ramef.ram)
+                        MainDGV.CurrentRow.Cells[2].Value = ramef.ram.ID;
+                    else
+                        MessageBox.Show("Cannot set this RAM in this computer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+        }
+
+        private void EditCPUButton_Click(object sender, EventArgs e)
+        {
+            if (MainDGV.Rows.Count > 0)
+            {
+                CPUEditForm cpuef = new CPUEditForm(DB_Interface);
+                cpuef.ShowDialog(this);
+                if (cpuef.DialogResult == DialogResult.OK)
+                {
+                    Computers[MainDGV.CurrentRow.Index].CurCPU = cpuef.cpu;
+                    if (Computers[MainDGV.CurrentRow.Index].CurCPU == cpuef.cpu)
+                        MainDGV.CurrentRow.Cells[4].Value = cpuef.cpu.ID;
+                    else
+                        MessageBox.Show("Cannot set this CPU in this computer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+        }
+
+        private void ShowChangelogAndPeripheralsButton_Click(object sender, EventArgs e)
+        {
+            ChangelogListBox.Items.Clear();
+
+            foreach (var i in Computers[MainDGV.CurrentRow.Index].ChangelogList)
+            {
+                ChangelogListBox.Items.Add(i.Logged_change);
+            }
+            foreach (var i in Computers[MainDGV.CurrentRow.Index].PeripheralsList)
+            {
+                PeripheralsListBox.Items.Add($"{i.ID}: {i.Name} - {i.PT.ToString()}");
+            }
+        }
+
+        private void AddPeripheralsButton_Click(object sender, EventArgs e)
+        {
+            PeripheralsEditForm pef = new PeripheralsEditForm(DB_Interface);
+            pef.ShowDialog(this);
+            if (pef.DialogResult == DialogResult.OK)
+                Computers[MainDGV.CurrentRow.Index].AddPeripheral(pef.peripheral);
         }
     }
 }

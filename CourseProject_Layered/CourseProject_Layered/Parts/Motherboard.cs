@@ -7,7 +7,7 @@ using DBI;
 
 namespace CourseProject_Layered
 {
-    class Motherboard : IDB_Write, IDB_Read
+    public class Motherboard : IDB_Write, IDB_Read
     {
         public int ID { get; private set; }
         public Manufacturer MF { get; private set; }

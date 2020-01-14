@@ -178,18 +178,21 @@ namespace CourseProject_Layered
 
             if(ReadMotherboard.Length > 0)
             {
-                Motherboard RMB = new Motherboard((int)ReadMotherboard[0], (Manufacturer)Enum.Parse(typeof(Manufacturer),
-                    ReadMotherboard[1].ToString()), (SocketType)Enum.Parse(typeof(SocketType), ReadMotherboard[2].ToString()), (int)ReadMotherboard[3]);
+                Motherboard RMB = new Motherboard((int)ReadMotherboard[0], (Manufacturer)Enum.Parse(typeof(Manufacturer), ReadMotherboard[1].ToString()),
+                    (SocketType)Enum.Parse(typeof(SocketType), ReadMotherboard[2].ToString()), (int)ReadMotherboard[3]);
                 CurMotherboard = RMB;
             }
             if (ReadRAM.Length > 0)
             {
-                RAM RR = new RAM((int)ReadRAM[0], (int)ReadRAM[1], (int)ReadRAM[2], (RAM_Type)Enum.Parse(typeof(RAM_Type), ReadRAM[3].ToString()), (int)ReadRAM[4]);
+                RAM_Type rtype = (RAM_Type)Enum.Parse(typeof(RAM_Type), ReadRAM[3].ToString());
+                //RAM RR = new RAM((int)ReadRAM[0], (int)ReadRAM[1], (int)ReadRAM[2]), ,(int)ReadRAM[4]);
+                RAM RR = new RAM((int)ReadRAM[0], (int)ReadRAM[1], (RAM_Type)Enum.Parse(typeof(RAM_Type), ReadRAM[2].ToString()), (int)ReadRAM[3], (int)ReadRAM[4]);
+                //(RAM_Type)Enum.Parse(typeof(RAM_Type), "");
                 CurRAM = RR;
             }
-            if(ReadCPU.Length > 0)
+            if(ReadCPU.Length > 0)// by some reason DataReader reads SocketType as int, Frequency as string
             {
-                CPU RC = new CPU((int)ReadCPU[0], (SocketType)Enum.Parse(typeof(SocketType), ReadCPU[1].ToString()), (int)ReadCPU[2]);
+                CPU RC = new CPU((int)ReadCPU[0], (SocketType)Enum.Parse(typeof(SocketType), ReadCPU[1].ToString()), int.Parse(ReadCPU[2].ToString()));
                 CurCPU = RC;
             }
             if(ReadChangelog.Length > 0)

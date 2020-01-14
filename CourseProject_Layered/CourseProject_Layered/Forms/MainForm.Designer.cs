@@ -42,8 +42,6 @@
             this.PeripheralsListBox = new System.Windows.Forms.ListBox();
             this.ChangelogListBox = new System.Windows.Forms.ListBox();
             this.SaveToDBButton = new System.Windows.Forms.Button();
-            this.FillTestValuesButtons = new System.Windows.Forms.Button();
-            this.dgvdatasourceclearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainDGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +56,7 @@
             this.MainDGV.Location = new System.Drawing.Point(3, 42);
             this.MainDGV.MultiSelect = false;
             this.MainDGV.Name = "MainDGV";
-            this.MainDGV.Size = new System.Drawing.Size(483, 307);
+            this.MainDGV.Size = new System.Drawing.Size(548, 307);
             this.MainDGV.TabIndex = 0;
             // 
             // TopLable
@@ -68,7 +66,7 @@
             this.TopLable.ForeColor = System.Drawing.SystemColors.Info;
             this.TopLable.Location = new System.Drawing.Point(-1, -1);
             this.TopLable.Name = "TopLable";
-            this.TopLable.Size = new System.Drawing.Size(890, 40);
+            this.TopLable.Size = new System.Drawing.Size(950, 40);
             this.TopLable.TabIndex = 1;
             this.TopLable.Text = "Computer Parts Course Project";
             this.TopLable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TopLable_MouseDown);
@@ -77,10 +75,10 @@
             // 
             this.CloseLable.BackColor = System.Drawing.Color.OrangeRed;
             this.CloseLable.Font = new System.Drawing.Font("Copperplate Gothic Light", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CloseLable.Location = new System.Drawing.Point(846, -1);
+            this.CloseLable.Location = new System.Drawing.Point(918, -1);
             this.CloseLable.Name = "CloseLable";
             this.CloseLable.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.CloseLable.Size = new System.Drawing.Size(49, 40);
+            this.CloseLable.Size = new System.Drawing.Size(48, 40);
             this.CloseLable.TabIndex = 2;
             this.CloseLable.Text = "X";
             this.CloseLable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -99,7 +97,7 @@
             // CreateComputerButton
             // 
             this.CreateComputerButton.Enabled = false;
-            this.CreateComputerButton.Location = new System.Drawing.Point(492, 43);
+            this.CreateComputerButton.Location = new System.Drawing.Point(557, 43);
             this.CreateComputerButton.Name = "CreateComputerButton";
             this.CreateComputerButton.Size = new System.Drawing.Size(98, 48);
             this.CreateComputerButton.TabIndex = 4;
@@ -110,7 +108,7 @@
             // RemoveComputerButton
             // 
             this.RemoveComputerButton.Enabled = false;
-            this.RemoveComputerButton.Location = new System.Drawing.Point(492, 86);
+            this.RemoveComputerButton.Location = new System.Drawing.Point(557, 86);
             this.RemoveComputerButton.Name = "RemoveComputerButton";
             this.RemoveComputerButton.Size = new System.Drawing.Size(98, 48);
             this.RemoveComputerButton.TabIndex = 5;
@@ -121,7 +119,7 @@
             // EditMotherboardButton
             // 
             this.EditMotherboardButton.Enabled = false;
-            this.EditMotherboardButton.Location = new System.Drawing.Point(492, 129);
+            this.EditMotherboardButton.Location = new System.Drawing.Point(557, 129);
             this.EditMotherboardButton.Name = "EditMotherboardButton";
             this.EditMotherboardButton.Size = new System.Drawing.Size(98, 48);
             this.EditMotherboardButton.TabIndex = 6;
@@ -132,7 +130,7 @@
             // EditRAMButton
             // 
             this.EditRAMButton.Enabled = false;
-            this.EditRAMButton.Location = new System.Drawing.Point(492, 172);
+            this.EditRAMButton.Location = new System.Drawing.Point(557, 172);
             this.EditRAMButton.Name = "EditRAMButton";
             this.EditRAMButton.Size = new System.Drawing.Size(98, 48);
             this.EditRAMButton.TabIndex = 7;
@@ -143,7 +141,7 @@
             // EditCPUButton
             // 
             this.EditCPUButton.Enabled = false;
-            this.EditCPUButton.Location = new System.Drawing.Point(492, 215);
+            this.EditCPUButton.Location = new System.Drawing.Point(557, 215);
             this.EditCPUButton.Name = "EditCPUButton";
             this.EditCPUButton.Size = new System.Drawing.Size(98, 48);
             this.EditCPUButton.TabIndex = 8;
@@ -154,7 +152,7 @@
             // AddPeripheralsButton
             // 
             this.AddPeripheralsButton.Enabled = false;
-            this.AddPeripheralsButton.Location = new System.Drawing.Point(492, 258);
+            this.AddPeripheralsButton.Location = new System.Drawing.Point(557, 258);
             this.AddPeripheralsButton.Name = "AddPeripheralsButton";
             this.AddPeripheralsButton.Size = new System.Drawing.Size(98, 48);
             this.AddPeripheralsButton.TabIndex = 9;
@@ -165,7 +163,7 @@
             // ShowChangelogAndPeripheralsButton
             // 
             this.ShowChangelogAndPeripheralsButton.Enabled = false;
-            this.ShowChangelogAndPeripheralsButton.Location = new System.Drawing.Point(492, 301);
+            this.ShowChangelogAndPeripheralsButton.Location = new System.Drawing.Point(557, 301);
             this.ShowChangelogAndPeripheralsButton.Name = "ShowChangelogAndPeripheralsButton";
             this.ShowChangelogAndPeripheralsButton.Size = new System.Drawing.Size(98, 48);
             this.ShowChangelogAndPeripheralsButton.TabIndex = 10;
@@ -176,7 +174,7 @@
             // PeripheralsListBox
             // 
             this.PeripheralsListBox.FormattingEnabled = true;
-            this.PeripheralsListBox.Location = new System.Drawing.Point(596, 195);
+            this.PeripheralsListBox.Location = new System.Drawing.Point(661, 203);
             this.PeripheralsListBox.Name = "PeripheralsListBox";
             this.PeripheralsListBox.Size = new System.Drawing.Size(288, 147);
             this.PeripheralsListBox.TabIndex = 11;
@@ -184,7 +182,7 @@
             // ChangelogListBox
             // 
             this.ChangelogListBox.FormattingEnabled = true;
-            this.ChangelogListBox.Location = new System.Drawing.Point(596, 42);
+            this.ChangelogListBox.Location = new System.Drawing.Point(661, 42);
             this.ChangelogListBox.Name = "ChangelogListBox";
             this.ChangelogListBox.Size = new System.Drawing.Size(288, 147);
             this.ChangelogListBox.TabIndex = 12;
@@ -200,34 +198,12 @@
             this.SaveToDBButton.UseVisualStyleBackColor = true;
             this.SaveToDBButton.Click += new System.EventHandler(this.SaveToDBButton_Click);
             // 
-            // FillTestValuesButtons
-            // 
-            this.FillTestValuesButtons.Location = new System.Drawing.Point(246, 355);
-            this.FillTestValuesButtons.Name = "FillTestValuesButtons";
-            this.FillTestValuesButtons.Size = new System.Drawing.Size(101, 38);
-            this.FillTestValuesButtons.TabIndex = 16;
-            this.FillTestValuesButtons.Text = "Fill test values";
-            this.FillTestValuesButtons.UseVisualStyleBackColor = true;
-            this.FillTestValuesButtons.Click += new System.EventHandler(this.FillTestValuesButtons_Click);
-            // 
-            // dgvdatasourceclearButton
-            // 
-            this.dgvdatasourceclearButton.Location = new System.Drawing.Point(366, 355);
-            this.dgvdatasourceclearButton.Name = "dgvdatasourceclearButton";
-            this.dgvdatasourceclearButton.Size = new System.Drawing.Size(101, 38);
-            this.dgvdatasourceclearButton.TabIndex = 17;
-            this.dgvdatasourceclearButton.Text = "clear dgv datasource";
-            this.dgvdatasourceclearButton.UseVisualStyleBackColor = true;
-            this.dgvdatasourceclearButton.Click += new System.EventHandler(this.DgvdatasourceclearButton_Click);
-            // 
             // ComputerPartsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(889, 394);
-            this.Controls.Add(this.dgvdatasourceclearButton);
-            this.Controls.Add(this.FillTestValuesButtons);
+            this.ClientSize = new System.Drawing.Size(961, 394);
             this.Controls.Add(this.SaveToDBButton);
             this.Controls.Add(this.ChangelogListBox);
             this.Controls.Add(this.PeripheralsListBox);
@@ -270,8 +246,6 @@
         private System.Windows.Forms.ListBox PeripheralsListBox;
         private System.Windows.Forms.ListBox ChangelogListBox;
         private System.Windows.Forms.Button SaveToDBButton;
-        private System.Windows.Forms.Button FillTestValuesButtons;
-        private System.Windows.Forms.Button dgvdatasourceclearButton;
     }
 }
 

@@ -11,7 +11,7 @@ namespace CourseProject_Layered
         public RAM_Type RT { get; private set; }
         public int StickCount { get; private set; }
 
-        public RAM(int id, int volume, int frequency, RAM_Type rt, int stickCount)
+        public RAM(int id, int volume, RAM_Type rt, int frequency, int stickCount)
         {
             ID = Math.Abs(id);
             RT = rt;

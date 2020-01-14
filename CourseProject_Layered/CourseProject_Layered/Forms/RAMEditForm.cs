@@ -30,8 +30,8 @@ namespace CourseProject_Layered
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            ram = new RAM((int)IDNumericUpDown.Value, (int)VolumeNumericUpDown.Value, (int)FrequencyNumericUpDown.Value,
-                                                    (RAM_Type)TypeComboBox.SelectedItem, (int)StickCountNumericUpDown.Value);
+            ram = new RAM((int)IDNumericUpDown.Value, (int)VolumeNumericUpDown.Value, (RAM_Type)TypeComboBox.SelectedItem, 
+                (int)FrequencyNumericUpDown.Value, (int)StickCountNumericUpDown.Value);
             if(ram.WriteToDB(DB_Interface))
             {
                 this.DialogResult = DialogResult.OK;

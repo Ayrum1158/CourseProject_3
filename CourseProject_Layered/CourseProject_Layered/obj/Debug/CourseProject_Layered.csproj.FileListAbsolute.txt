@@ -15,3 +15,4 @@ D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.RAMEditForm.resources
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.CPUEditForm.resources
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.PeripheralsEditForm.resources
+D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\bin\Debug\Favicon.ico

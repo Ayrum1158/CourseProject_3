@@ -7,7 +7,7 @@ namespace CourseProject_Layered
 {
     public partial class RAMEditForm : Form
     {
-        public RAM ram;
+        public RAM ram { get; private set; }
 
         private DB_interface DB_Interface;
 

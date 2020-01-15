@@ -7,7 +7,7 @@ namespace CourseProject_Layered
     public partial class PeripheralsEditForm : Form
     {
         private DB_interface DB_Interface;
-        public Peripheral peripheral;
+        public Peripheral peripheral { get; private set; }
 
         public PeripheralsEditForm(DB_interface dbi)
         {

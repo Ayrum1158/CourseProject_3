@@ -11,7 +11,7 @@ namespace CourseProject_Layered
     {
         private DB_interface DB_Interface;
 
-        public Computer NewComp;
+        public Computer NewComp { get; private set; }
 
         public CreateComputerForm(DB_interface dbi)
         {

@@ -6,6 +6,8 @@ namespace CourseProject_Layered
     public interface IDB_Write
     {
         bool WriteToDB(DB_interface DBI_obj);
+
+        void DeleteFromDB(DB_interface DBI_obj);
     }
 
     public interface IDB_Read
@@ -23,6 +25,8 @@ namespace CourseProject_Layered
 
     static class MainProgram
     {
+        public static ComputerPartsForm CPF { get; private set; }
+
         /// <summary>
         /// App entry point.
         /// </summary>
@@ -30,7 +34,8 @@ namespace CourseProject_Layered
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ComputerPartsForm());
+            CPF = new ComputerPartsForm();
+            Application.Run(CPF);
         }
     }
 }

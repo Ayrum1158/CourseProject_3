@@ -19,8 +19,9 @@ namespace CourseProject_Layered
         public static extern bool ReleaseCapture();
         // to be able to drag window end
 
+        public DB_interface DB_Interface { get; private set; }
+
         private const int ElementsInCP = 6;
-        private DB_interface DB_Interface;
         private int ComputersCount;
         private List<Computer> Computers;
 
@@ -101,7 +102,6 @@ namespace CourseProject_Layered
             EditRAMButton.Enabled = true;
             EditCPUButton.Enabled = true;
             AddPeripheralsButton.Enabled = true;
-            ShowChangelogAndPeripheralsButton.Enabled = true;
         }
 
         private void SaveToDBButton_Click(object sender, EventArgs e)
@@ -173,8 +173,8 @@ namespace CourseProject_Layered
         {
             if (MainDGV.Rows.Count > 0)
             {
+                Computers[MainDGV.CurrentRow.Index].DeleteFromDB(DB_Interface);
                 Computers.RemoveAt(MainDGV.CurrentRow.Index);
-                DB_Interface.DeleteRows("ComputerParts", "InventoryNumber", MainDGV.CurrentRow.Cells[0].Value.ToString());
                 MainDGV.Rows.Remove(MainDGV.CurrentRow);
                 ComputersCount--;
             }
@@ -233,9 +233,10 @@ namespace CourseProject_Layered
             }
         }
 
-        private void ShowChangelogAndPeripheralsButton_Click(object sender, EventArgs e)
+        private void ShowChangelogAndPeripherals()
         {
             ChangelogListBox.Items.Clear();
+            PeripheralsListBox.Items.Clear();
 
             foreach (var i in Computers[MainDGV.CurrentRow.Index].ChangelogList)
             {
@@ -243,7 +244,7 @@ namespace CourseProject_Layered
             }
             foreach (var i in Computers[MainDGV.CurrentRow.Index].PeripheralsList)
             {
-                PeripheralsListBox.Items.Add($"{i.ID}: {i.Name} - {i.PT.ToString()}");
+                PeripheralsListBox.Items.Add($"ID: {i.ID} - {i.Name} - {i.PT.ToString()}");
             }
         }
 
@@ -253,6 +254,16 @@ namespace CourseProject_Layered
             pef.ShowDialog(this);
             if (pef.DialogResult == DialogResult.OK)
                 Computers[MainDGV.CurrentRow.Index].AddPeripheral(pef.peripheral);
+        }
+
+        private void MainDGV_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ShowChangelogAndPeripherals();
+        }
+
+        private void ComputerPartsForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

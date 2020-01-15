@@ -233,7 +233,7 @@ namespace DBI//DataBaseInterface
         /// <param name="WhereParam">Column name to compare with parameter.</param>
         /// <param name="ParamValue">Compare parameter.</param>
         /// <returns></returns>
-        public int DeleteRows(string Table, string WhereParam, string ParamValue)
+        public int DeleteRowsWhere(string Table, string WhereParam, string ParamValue)
         {
             int RowsDeleted;
             using (SqlConnection conn = new SqlConnection(ConnectionString))

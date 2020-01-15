@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DBI;
 using System.Text.RegularExpressions;
-using System.Data.SqlClient;
 
 namespace CourseProject_Layered
 {
@@ -114,6 +112,11 @@ namespace CourseProject_Layered
             InventoryNumber = inventoryNumber;
         }
 
+        //~Computer()
+        //{
+        //    DeleteFromDB(MainProgram.CPF.DB_Interface);
+        //}
+
         public bool WriteToDB(DB_interface DBI_obj)//first write or update records
         {
             if(CurCPU != null)
@@ -168,7 +171,7 @@ namespace CourseProject_Layered
 
         public Computer ReadFromDBFull(DB_interface DBI_obj)//read whole Computer structure
         {
-            var IDs = DBI_obj.SelectRowsWhere("ComputerParts", "InventoryNumber", InventoryNumber);//6 elements
+            var IDs = ReadFromDB(DBI_obj);//6 elements
 
             var ReadMotherboard = DBI_obj.SelectRowsWhere("Motherboards", "Motherboard_id", IDs[1].ToString());
             var ReadRAM = DBI_obj.SelectRowsWhere("RAMs", "RAM_id", IDs[2].ToString());
@@ -185,12 +188,10 @@ namespace CourseProject_Layered
             if (ReadRAM.Length > 0)
             {
                 RAM_Type rtype = (RAM_Type)Enum.Parse(typeof(RAM_Type), ReadRAM[3].ToString());
-                //RAM RR = new RAM((int)ReadRAM[0], (int)ReadRAM[1], (int)ReadRAM[2]), ,(int)ReadRAM[4]);
                 RAM RR = new RAM((int)ReadRAM[0], (int)ReadRAM[1], (RAM_Type)Enum.Parse(typeof(RAM_Type), ReadRAM[2].ToString()), (int)ReadRAM[3], (int)ReadRAM[4]);
-                //(RAM_Type)Enum.Parse(typeof(RAM_Type), "");
                 CurRAM = RR;
             }
-            if(ReadCPU.Length > 0)// by some reason DataReader reads SocketType as int, Frequency as string
+            if(ReadCPU.Length > 0)// by somehow DataReader reads SocketType as int, Frequency as string
             {
                 CPU RC = new CPU((int)ReadCPU[0], (SocketType)Enum.Parse(typeof(SocketType), ReadCPU[1].ToString()), int.Parse(ReadCPU[2].ToString()));
                 CurCPU = RC;
@@ -243,6 +244,25 @@ namespace CourseProject_Layered
                 }
             }           
             PeripheralsList.Add(peripheral);
+        }
+
+        public void DeleteFromDB(DB_interface DBI_obj)
+        {
+            DBI_obj.DeleteRowsWhere("ComputerParts", "InventoryNumber", InventoryNumber);
+            if(CurCPU != null)
+                CurCPU.DeleteFromDB(DBI_obj);
+            if (CurMotherboard != null)
+                CurMotherboard.DeleteFromDB(DBI_obj);
+            if (CurRAM != null)
+                CurRAM.DeleteFromDB(DBI_obj);
+            foreach(var i in ChangelogList)
+            {
+                i.DeleteFromDB(DBI_obj);
+            }
+            foreach (var i in PeripheralsList)
+            {
+                i.DeleteFromDB(DBI_obj);
+            }
         }
     }
 }

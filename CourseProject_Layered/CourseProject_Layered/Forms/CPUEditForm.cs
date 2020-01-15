@@ -8,7 +8,7 @@ namespace CourseProject_Layered
     {
         private DB_interface DB_Interface;
 
-        public CPU cpu;
+        public CPU cpu { get; private set; }
 
         public CPUEditForm(DB_interface dbi)
         {

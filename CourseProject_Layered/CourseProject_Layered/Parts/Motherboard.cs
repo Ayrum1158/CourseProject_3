@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DBI;
 
 namespace CourseProject_Layered
 {
-    public class Motherboard : IDB_Write, IDB_Read
+    public class Motherboard : Part, IDB_Write, IDB_Read
     {
-        public int ID { get; private set; }
         public Manufacturer MF { get; private set; }
         public SocketType ST { get; private set; }
         public int RAM_Slots { get; private set; }
@@ -30,6 +25,11 @@ namespace CourseProject_Layered
         public object[] ReadFromDB(DB_interface DBI_obj)
         {
             return DBI_obj.SelectAllFrom("Motherboards");
+        }
+
+        public void DeleteFromDB(DB_interface DBI_obj)
+        {
+            DBI_obj.DeleteRowsWhere("Motherboards", "Motherboard_id", ID.ToString());
         }
     }
 }

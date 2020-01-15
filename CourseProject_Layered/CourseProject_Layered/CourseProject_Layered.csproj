@@ -50,6 +50,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -106,6 +109,7 @@
     <Compile Include="Parts\Computer.cs" />
     <Compile Include="Parts\CPU.cs" />
     <Compile Include="Parts\Motherboard.cs" />
+    <Compile Include="Parts\Part.cs" />
     <Compile Include="Parts\Peripheral.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parts\RAM.cs" />
@@ -154,6 +158,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DB\CPDatabase_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

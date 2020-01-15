@@ -26,5 +26,10 @@ namespace CourseProject_Layered
         {
             return DBI_obj.SelectRowsWhere("Changelogs", "Changelog_id", ID.ToString());
         }
+
+        public void DeleteFromDB(DB_interface DBI_obj)
+        {
+            DBI_obj.DeleteRowsWhere("Changelogs", "Changelog_id", ID.ToString());
+        }
     }
 }

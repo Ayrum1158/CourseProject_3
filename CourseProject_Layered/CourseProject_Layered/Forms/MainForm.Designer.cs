@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ComputerPartsForm));
             this.MainDGV = new System.Windows.Forms.DataGridView();
             this.TopLable = new System.Windows.Forms.Label();
             this.CloseLable = new System.Windows.Forms.Label();
@@ -38,7 +39,6 @@
             this.EditRAMButton = new System.Windows.Forms.Button();
             this.EditCPUButton = new System.Windows.Forms.Button();
             this.AddPeripheralsButton = new System.Windows.Forms.Button();
-            this.ShowChangelogAndPeripheralsButton = new System.Windows.Forms.Button();
             this.PeripheralsListBox = new System.Windows.Forms.ListBox();
             this.ChangelogListBox = new System.Windows.Forms.ListBox();
             this.SaveToDBButton = new System.Windows.Forms.Button();
@@ -58,6 +58,7 @@
             this.MainDGV.Name = "MainDGV";
             this.MainDGV.Size = new System.Drawing.Size(548, 307);
             this.MainDGV.TabIndex = 0;
+            this.MainDGV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MainDGV_CellClick);
             // 
             // TopLable
             // 
@@ -108,7 +109,7 @@
             // RemoveComputerButton
             // 
             this.RemoveComputerButton.Enabled = false;
-            this.RemoveComputerButton.Location = new System.Drawing.Point(557, 86);
+            this.RemoveComputerButton.Location = new System.Drawing.Point(557, 94);
             this.RemoveComputerButton.Name = "RemoveComputerButton";
             this.RemoveComputerButton.Size = new System.Drawing.Size(98, 48);
             this.RemoveComputerButton.TabIndex = 5;
@@ -119,7 +120,7 @@
             // EditMotherboardButton
             // 
             this.EditMotherboardButton.Enabled = false;
-            this.EditMotherboardButton.Location = new System.Drawing.Point(557, 129);
+            this.EditMotherboardButton.Location = new System.Drawing.Point(557, 145);
             this.EditMotherboardButton.Name = "EditMotherboardButton";
             this.EditMotherboardButton.Size = new System.Drawing.Size(98, 48);
             this.EditMotherboardButton.TabIndex = 6;
@@ -130,7 +131,7 @@
             // EditRAMButton
             // 
             this.EditRAMButton.Enabled = false;
-            this.EditRAMButton.Location = new System.Drawing.Point(557, 172);
+            this.EditRAMButton.Location = new System.Drawing.Point(557, 196);
             this.EditRAMButton.Name = "EditRAMButton";
             this.EditRAMButton.Size = new System.Drawing.Size(98, 48);
             this.EditRAMButton.TabIndex = 7;
@@ -141,7 +142,7 @@
             // EditCPUButton
             // 
             this.EditCPUButton.Enabled = false;
-            this.EditCPUButton.Location = new System.Drawing.Point(557, 215);
+            this.EditCPUButton.Location = new System.Drawing.Point(557, 247);
             this.EditCPUButton.Name = "EditCPUButton";
             this.EditCPUButton.Size = new System.Drawing.Size(98, 48);
             this.EditCPUButton.TabIndex = 8;
@@ -152,24 +153,13 @@
             // AddPeripheralsButton
             // 
             this.AddPeripheralsButton.Enabled = false;
-            this.AddPeripheralsButton.Location = new System.Drawing.Point(557, 258);
+            this.AddPeripheralsButton.Location = new System.Drawing.Point(557, 298);
             this.AddPeripheralsButton.Name = "AddPeripheralsButton";
             this.AddPeripheralsButton.Size = new System.Drawing.Size(98, 48);
             this.AddPeripheralsButton.TabIndex = 9;
             this.AddPeripheralsButton.Text = "Add peripherals";
             this.AddPeripheralsButton.UseVisualStyleBackColor = true;
             this.AddPeripheralsButton.Click += new System.EventHandler(this.AddPeripheralsButton_Click);
-            // 
-            // ShowChangelogAndPeripheralsButton
-            // 
-            this.ShowChangelogAndPeripheralsButton.Enabled = false;
-            this.ShowChangelogAndPeripheralsButton.Location = new System.Drawing.Point(557, 301);
-            this.ShowChangelogAndPeripheralsButton.Name = "ShowChangelogAndPeripheralsButton";
-            this.ShowChangelogAndPeripheralsButton.Size = new System.Drawing.Size(98, 48);
-            this.ShowChangelogAndPeripheralsButton.TabIndex = 10;
-            this.ShowChangelogAndPeripheralsButton.Text = "Show changelog and peripherals";
-            this.ShowChangelogAndPeripheralsButton.UseVisualStyleBackColor = true;
-            this.ShowChangelogAndPeripheralsButton.Click += new System.EventHandler(this.ShowChangelogAndPeripheralsButton_Click);
             // 
             // PeripheralsListBox
             // 
@@ -207,7 +197,6 @@
             this.Controls.Add(this.SaveToDBButton);
             this.Controls.Add(this.ChangelogListBox);
             this.Controls.Add(this.PeripheralsListBox);
-            this.Controls.Add(this.ShowChangelogAndPeripheralsButton);
             this.Controls.Add(this.AddPeripheralsButton);
             this.Controls.Add(this.EditCPUButton);
             this.Controls.Add(this.EditRAMButton);
@@ -219,12 +208,13 @@
             this.Controls.Add(this.TopLable);
             this.Controls.Add(this.MainDGV);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ComputerPartsForm";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Computer Parts Course Project";
+            this.Load += new System.EventHandler(this.ComputerPartsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.MainDGV)).EndInit();
             this.ResumeLayout(false);
 
@@ -242,7 +232,6 @@
         private System.Windows.Forms.Button EditRAMButton;
         private System.Windows.Forms.Button EditCPUButton;
         private System.Windows.Forms.Button AddPeripheralsButton;
-        private System.Windows.Forms.Button ShowChangelogAndPeripheralsButton;
         private System.Windows.Forms.ListBox PeripheralsListBox;
         private System.Windows.Forms.ListBox ChangelogListBox;
         private System.Windows.Forms.Button SaveToDBButton;

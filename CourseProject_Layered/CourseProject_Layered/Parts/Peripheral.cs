@@ -30,5 +30,10 @@ namespace CourseProject_Layered
         {
             return DBI_obj.SelectRowsWhere("Peripheral", "Peripheral_id", ID.ToString());
         }
+
+        public void DeleteFromDB(DB_interface DBI_obj)
+        {
+            DBI_obj.DeleteRowsWhere("Peripheral", "Peripheral_id", ID.ToString());
+        }
     }
 }

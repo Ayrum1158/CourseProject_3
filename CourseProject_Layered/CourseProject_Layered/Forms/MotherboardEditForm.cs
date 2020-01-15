@@ -9,7 +9,7 @@ namespace CourseProject_Layered
     {
         private DB_interface DB_Interface;
 
-        public Motherboard motherboard;
+        public Motherboard motherboard { get; private set; }
 
         public MotherboardEditForm(DB_interface dbi, DataGridView dgv)
         {

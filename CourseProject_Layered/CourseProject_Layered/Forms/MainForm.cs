@@ -146,7 +146,14 @@ namespace CourseProject_Layered
         private void CreateComputerButton_Click(object sender, EventArgs e)
         {
             CreateComputerForm ccf = new CreateComputerForm(DB_Interface);
-            ccf.ShowDialog(this);
+            try
+            {
+                ccf.ShowDialog(this);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Alphanumeric latin only.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             if (ccf.DialogResult == DialogResult.OK)
             {
                 for (int i = 0; i < MainDGV.Rows.Count; i++)// is this check needed when we have dialogresult?

@@ -16,3 +16,21 @@ D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.CPUEditForm.resources
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.PeripheralsEditForm.resources
 D:\Documents\Ayrum\3 курс\SPZ\CP\CourseProject_Layered\CourseProject_Layered\bin\Debug\Favicon.ico
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\bin\Debug\DB\CPDatabase.mdf
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\bin\Debug\DB\CPDatabase_log.ldf
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\bin\Debug\Favicon.ico
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\bin\Debug\CourseProject_Layered.exe.config
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\bin\Debug\CourseProject_Layered.exe
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\bin\Debug\CourseProject_Layered.pdb
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.csprojAssemblyReference.cache
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.CPUEditForm.resources
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.CreateComputerForm.resources
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.ComputerPartsForm.resources
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.MotherboardEditForm.resources
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.PeripheralsEditForm.resources
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.RAMEditForm.resources
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.Properties.Resources.resources
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.csproj.GenerateResource.cache
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.csproj.CoreCompileInputs.cache
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.exe
+C:\Users\ayrum\Desktop\CourseProject_3\CourseProject_Layered\CourseProject_Layered\obj\Debug\CourseProject_Layered.pdb

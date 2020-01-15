@@ -257,10 +257,13 @@ namespace CourseProject_Layered
 
         private void AddPeripheralsButton_Click(object sender, EventArgs e)
         {
-            PeripheralsEditForm pef = new PeripheralsEditForm(DB_Interface);
-            pef.ShowDialog(this);
-            if (pef.DialogResult == DialogResult.OK)
-                Computers[MainDGV.CurrentRow.Index].AddPeripheral(pef.peripheral);
+            if (MainDGV.Rows.Count > 0)
+            {
+                PeripheralsEditForm pef = new PeripheralsEditForm(DB_Interface);
+                pef.ShowDialog(this);
+                if (pef.DialogResult == DialogResult.OK)
+                    Computers[MainDGV.CurrentRow.Index].AddPeripheral(pef.peripheral);
+            }
         }
 
         private void MainDGV_CellClick(object sender, DataGridViewCellEventArgs e)

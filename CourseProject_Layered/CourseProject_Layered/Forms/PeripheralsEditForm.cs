@@ -29,9 +29,17 @@ namespace CourseProject_Layered
         private void OKButton_Click(object sender, EventArgs e)
         {
             peripheral = new Peripheral((int)IDNumericUpDown.Value, (PeripheralType)TypeComboBox.SelectedItem, NameTextBox.Text, PerformanceTextBox.Text);
-            if(peripheral.WriteToDB(DB_Interface))
+            if (NameTextBox.Text.Length > 0)
             {
-                this.DialogResult = DialogResult.OK;
+                if (peripheral.WriteToDB(DB_Interface))
+                {
+                    this.DialogResult = DialogResult.OK;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Enter device name.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             this.Close();
         }
